@@ -1,0 +1,1 @@
+web gunicorn footdle.wsgi:application --log-file -

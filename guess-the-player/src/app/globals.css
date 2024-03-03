@@ -74,3 +74,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+.separator {
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 2px solid #ccc; /* Adjust border style as needed */
+}
+
+.table-row-logo {
+  width: 55px; /* Adjust as needed */
+  height: 55px; /* Adjust as needed */
+}
+
+.table-row-face {
+  width: 60px;
+  height: 60px;
+}
+
+.player-card-image {
+  width: 54px;
+  height: 54px;
+}

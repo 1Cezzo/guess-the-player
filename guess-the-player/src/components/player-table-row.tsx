@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import countryToCountryCode from '@/lib/country-codes'; // Import the country code mapping
+import { ArrowUp, ArrowDown } from 'feather-icons-react';
 
 const PlayerTableRow = ({ player, correctPlayer }) => {
   // Get the country code from the player's nationality
@@ -12,9 +13,9 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
 
   useEffect(() => {
     const timeouts = [
-      setTimeout(() => setAnimateAge(true), 500),
-      setTimeout(() => setAnimateNationality(true), 1000),
-      setTimeout(() => setAnimateClub(true), 1500)
+      setTimeout(() => setAnimateAge(true), 1000),
+      setTimeout(() => setAnimateNationality(true), 1500),
+      setTimeout(() => setAnimateClub(true), 2000)
     ];
 
     return () => {
@@ -22,7 +23,10 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
     };
   }, []);
 
-  const backgroundColorAge = animateAge ? (player.age === correctPlayer.age ? 'bg-green-500' : 'bg-red-500') : 'bg-white';
+  const backgroundColorAge = animateAge ? (
+    player.age === correctPlayer.age ? 'bg-green-500' : 
+    player.age > correctPlayer.age ? 'bg-red-500 arrow' : 'bg-red-500 arrow'
+  ) : 'bg-white';
   const backgroundColorNationality = animateNationality ? (player.nationality === correctPlayer.nationality ? 'bg-green-500' : 'bg-red-500') : 'bg-white';
   const backgroundColorClub = animateClub ? (player.team_name === correctPlayer.team_name ? 'bg-green-500' : 'bg-red-500') : 'bg-white';
 
@@ -38,9 +42,16 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
           </div>
         </div>
       </td>
-      <td className={`border border-black ${backgroundColorAge} w-[70px] h-[70px] p-0 text-center`}>
-        <span className="text-white text-xl">{player.age}</span>
-      </td> 
+      <td className={`border border-black ${backgroundColorAge} w-[70px] h-[70px] p-0 text-center relative`}>
+        <div className="relative">
+          <span className="text-white text-xl">{player.age}</span>
+          {player.age !== correctPlayer.age && (
+            <div className="absolute inset-0 flex justify-center items-center">
+              {player.age > correctPlayer.age ? <ArrowDown size={150} className='opacity-50' /> : <ArrowUp size={150} className='opacity-50' />}
+            </div>
+          )}
+        </div>
+      </td>
       <td className={`border border-black ${backgroundColorNationality} w-[65px] h-[65px] p-0 text-center`}>
         <div className="flex justify-center">
           <div className="w-[65px] h-[65px] flex items-center justify-center">

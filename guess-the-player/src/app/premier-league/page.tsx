@@ -36,6 +36,7 @@ const PremierLeaguePage: React.FC = () => {
   // Handle click event for selecting a player
   const handlePlayerClick = (player: any) => {
     setSelectedPlayers(prevSelectedPlayers => [...prevSelectedPlayers, player]);
+    setSearchQuery(''); 
   };
 
   const renderPlayerCards = searchQuery.length > 2 ? (
@@ -43,9 +44,11 @@ const PremierLeaguePage: React.FC = () => {
       {filteredPlayers.length === 0 ? (
         <p>No player found</p>
       ) : (
-        filteredPlayers.map(player => (
-          <PlayerCard key={player.id} player={player} onClick={() => handlePlayerClick(player)} />
-        ))
+        filteredPlayers
+          .filter(player => !selectedPlayers.some(selectedPlayer => selectedPlayer.id === player.id)) // Filter out selected players
+          .map(player => (
+            <PlayerCard key={player.id} player={player} onClick={() => handlePlayerClick(player)} />
+          ))
       )}
     </div>
   ) : null;
@@ -96,13 +99,13 @@ const PremierLeaguePage: React.FC = () => {
       </div>
       <div className="mt-12">
         {/* Render list of selected players */}
-        <table className="">
+        <table className="table-auto border-spacing-5">
           <thead>
           <tr>
-            <th className="w-[65px]">Player</th>
-            <th className="w-[65px]">Age</th>
-            <th className="w-[65px]">Nationality</th>
-            <th className="w-[65px]">Team</th>
+            <th className="w-[65px] text-xl">Player</th>
+            <th className="w-[65px] text-xl">Age</th>
+            <th className="w-[65px] text-xl">Nationality</th>
+            <th className="w-[65px] text-xl">Team</th>
           </tr>
           <tr>
             <td><Separator className="separator" /></td>
@@ -114,7 +117,7 @@ const PremierLeaguePage: React.FC = () => {
           <tbody>
             <div className='mt-2'></div>
             {selectedPlayers.map(player => (
-              <PlayerTableRow key={player.id} player={player} />
+              <PlayerTableRow key={player.id} player={player} correctPlayer={correctPlayer} />
             ))}
           </tbody>
         </table>

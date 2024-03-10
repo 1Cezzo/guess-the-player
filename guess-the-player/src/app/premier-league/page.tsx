@@ -39,7 +39,7 @@ const PremierLeaguePage: React.FC = () => {
     setSearchQuery(''); 
   };
 
-  const renderPlayerCards = searchQuery.length > 2 ? (
+  const renderPlayerCards = searchQuery.length > 1 ? (
     <div className="max-h-52 w-[350px] overflow-y-auto">
       {filteredPlayers.length === 0 ? (
         <p>No player found</p>
@@ -104,10 +104,14 @@ const PremierLeaguePage: React.FC = () => {
           <tr>
             <th className="w-[65px] text-xl">Player</th>
             <th className="w-[65px] text-xl">Age</th>
+            <th className="w-[65px] text-xl">Height</th>
+            <th className="w-[65px] text-xl">Position</th>
             <th className="w-[65px] text-xl">Nationality</th>
             <th className="w-[65px] text-xl">Team</th>
           </tr>
           <tr>
+            <td><Separator className="separator" /></td>
+            <td><Separator className="separator" /></td>
             <td><Separator className="separator" /></td>
             <td><Separator className="separator" /></td>
             <td><Separator className="separator" /></td>

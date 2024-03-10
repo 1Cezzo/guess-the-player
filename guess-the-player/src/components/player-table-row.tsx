@@ -8,14 +8,18 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
   const countryCode = countryToCountryCode[player.nationality];
 
   const [animateAge, setAnimateAge] = useState(false);
+  const [animateHeight, setAnimateHeight] = useState(false);
+  const [animatePosition, setAnimatePosition] = useState(false);
   const [animateNationality, setAnimateNationality] = useState(false);
   const [animateClub, setAnimateClub] = useState(false);
 
   useEffect(() => {
     const timeouts = [
       setTimeout(() => setAnimateAge(true), 1000),
-      setTimeout(() => setAnimateNationality(true), 1500),
-      setTimeout(() => setAnimateClub(true), 2000)
+      setTimeout(() => setAnimateHeight(true), 1500),
+      setTimeout(() => setAnimatePosition(true), 2000),
+      setTimeout(() => setAnimateNationality(true), 2500),
+      setTimeout(() => setAnimateClub(true), 3000)
     ];
 
     return () => {
@@ -26,6 +30,13 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
   const backgroundColorAge = animateAge ? (
     player.age === correctPlayer.age ? 'bg-green-500' : 
     player.age > correctPlayer.age ? 'bg-red-500 arrow' : 'bg-red-500 arrow'
+  ) : 'bg-white';
+  const backgroundColorHeight = animateHeight ? (
+    player.height === correctPlayer.height ? 'bg-green-500' : 
+    player.height > correctPlayer.height ? 'bg-red-500 arrow' : 'bg-red-500 arrow'
+  ) : 'bg-white';
+  const backgroundColorPosition = animatePosition ? (
+    player.position === correctPlayer.position ? 'bg-green-500' : 'bg-red-500'
   ) : 'bg-white';
   const backgroundColorNationality = animateNationality ? (player.nationality === correctPlayer.nationality ? 'bg-green-500' : 'bg-red-500') : 'bg-white';
   const backgroundColorClub = animateClub ? (player.team_name === correctPlayer.team_name ? 'bg-green-500' : 'bg-red-500') : 'bg-white';
@@ -50,6 +61,23 @@ const PlayerTableRow = ({ player, correctPlayer }) => {
               {player.age > correctPlayer.age ? <ArrowDown size={150} className='opacity-50' /> : <ArrowUp size={150} className='opacity-50' />}
             </div>
           )}
+        </div>
+      </td>
+      <td className={`border border-black ${backgroundColorHeight} w-[70px] h-[70px] p-0 text-center relative`}>
+        <div className="relative">
+          <span className="text-white text-xl">{player.height}</span>
+          {player.height !== correctPlayer.height && (
+            <div className="absolute inset-0 flex justify-center items-center">
+              {player.height > correctPlayer.height ? <ArrowDown size={150} className='opacity-50' /> : <ArrowUp size={150} className='opacity-50' />}
+            </div>
+          )}
+        </div>
+      </td>
+      <td className={`border border-black ${backgroundColorPosition} w-[100px] h-[70px] p-0 text-center`}>
+        <div className="flex justify-center">
+          <div className="w-[100px] h-[70px] flex items-center justify-center">
+            <span className="text-white text-l">{player.position}</span>
+          </div>
         </div>
       </td>
       <td className={`border border-black ${backgroundColorNationality} w-[65px] h-[65px] p-0 text-center`}>

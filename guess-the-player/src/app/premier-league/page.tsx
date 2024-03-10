@@ -5,12 +5,15 @@ import axios from 'axios';
 import PlayerCard from '@/components/player-card'; // Import PlayerCard component
 import { Separator } from "@/components/ui/separator"
 import PlayerTableRow from '@/components/player-table-row';
+import Confetti from 'react-confetti';
 
 const PremierLeaguePage: React.FC = () => {
   const [players, setPlayers] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]); // State for selected players
   const [correctPlayer, setCorrectPlayer] = useState<any | null>(null);
+  const [isCorrectPlayerSelected, setIsCorrectPlayerSelected] = useState<boolean>(false);
+
   const API_BASE_URL = 'https://luigi-backend-7f709e978d15.herokuapp.com';
 
   const endpointUrl = `${API_BASE_URL}/players/`;
@@ -33,11 +36,14 @@ const PremierLeaguePage: React.FC = () => {
     player.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Handle click event for selecting a player
   const handlePlayerClick = (player: any) => {
     setSelectedPlayers(prevSelectedPlayers => [...prevSelectedPlayers, player]);
-    setSearchQuery(''); 
-  };
+    setSearchQuery('');
+    
+    if (player.id === correctPlayer.id) {
+      setIsCorrectPlayerSelected(true);
+    }
+  };  
 
   const renderPlayerCards = searchQuery.length > 1 ? (
     <div className="max-h-52 w-[350px] overflow-y-auto">
@@ -54,7 +60,7 @@ const PremierLeaguePage: React.FC = () => {
   ) : null;
 
   const selectCorrectPlayer = () => {
-    const randomIndex = Math.floor(Math.random() * 438); // 438 is the total number of players
+    const randomIndex = Math.floor(Math.random() * 33); // 438 is the total number of players
     const randomPlayer = players[randomIndex];
     setCorrectPlayer(randomPlayer);
   };
@@ -94,9 +100,20 @@ const PremierLeaguePage: React.FC = () => {
         onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
       />
       <div>
-        {/* Conditionally render list of player cards */}
+        {}
         {renderPlayerCards}
       </div>
+        {isCorrectPlayerSelected && <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          run={isCorrectPlayerSelected}
+          numberOfPieces={500}
+          gravity={0.1}
+          initialVelocityX={2}
+          initialVelocityY={-0.5}
+          colors={['#ff0000', '#00ff00', '#0000ff']}
+            />}
       <div className="mt-12">
         {/* Render list of selected players */}
         <table className="table-auto border-spacing-5">

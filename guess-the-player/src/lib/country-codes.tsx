@@ -80,7 +80,7 @@ const countryToCountryCode = {
   'Indonesia': 'id',
   'Iran': 'ir',
   'Iraq': 'iq',
-  'Ireland': 'ie',
+  'Republic of Ireland': 'ie',
   'Israel': 'il',
   'Italy': 'it',
   'Jamaica': 'jm',

@@ -31,7 +31,6 @@ const PremierLeaguePage: React.FC = () => {
     fetchPlayers();
   }, []);
 
-  // Filter players based on search query
   const filteredPlayers = players.filter(player =>
     player.name.toLowerCase().includes(searchQuery.toLowerCase())
   );

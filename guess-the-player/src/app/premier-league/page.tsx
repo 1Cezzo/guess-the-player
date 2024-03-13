@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PlayerCard from '@/components/player-card'; // Import PlayerCard component
-import { Separator } from "@/components/ui/separator"
-import PlayerTableRow from '@/components/player-table-row';
 import SelectedPlayersList from '@/components/selected-players';
 import Confetti from 'react-confetti';
 
@@ -16,7 +14,7 @@ const PremierLeaguePage: React.FC = () => {
   const [isCorrectPlayerSelected, setIsCorrectPlayerSelected] = useState<boolean>(false);
   const [playerSelected, setPlayerSelected] = useState(false);
 
-  const API_BASE_URL = 'https://luigi-backend-7f709e978d15.herokuapp.com';
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const endpointUrl = `${API_BASE_URL}/players/`;
 

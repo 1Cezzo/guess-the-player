@@ -5,6 +5,7 @@ import axios from 'axios';
 import PlayerCard from '@/components/player-card'; // Import PlayerCard component
 import { Separator } from "@/components/ui/separator"
 import PlayerTableRow from '@/components/player-table-row';
+import SelectedPlayersList from '@/components/selected-players';
 import Confetti from 'react-confetti';
 
 const PremierLeaguePage: React.FC = () => {
@@ -13,6 +14,7 @@ const PremierLeaguePage: React.FC = () => {
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]); // State for selected players
   const [correctPlayer, setCorrectPlayer] = useState<any | null>(null);
   const [isCorrectPlayerSelected, setIsCorrectPlayerSelected] = useState<boolean>(false);
+  const [playerSelected, setPlayerSelected] = useState(false);
 
   const API_BASE_URL = 'https://luigi-backend-7f709e978d15.herokuapp.com';
 
@@ -43,6 +45,8 @@ const PremierLeaguePage: React.FC = () => {
     if (player.id === correctPlayer.id) {
       setIsCorrectPlayerSelected(true);
     }
+
+    setPlayerSelected(true);
   };  
 
   const renderPlayerCards = searchQuery.length > 1 ? (
@@ -114,35 +118,7 @@ const PremierLeaguePage: React.FC = () => {
           initialVelocityY={-0.5}
           colors={['#ff0000', '#00ff00', '#0000ff']}
             />}
-      <div className="mt-12">
-        {/* Render list of selected players */}
-        <table className="table-auto border-spacing-5">
-          <thead>
-          <tr>
-            <th className="w-[65px] text-xl">Player</th>
-            <th className="w-[65px] text-xl">Age</th>
-            <th className="w-[65px] text-xl">Height</th>
-            <th className="w-[65px] text-xl">Position</th>
-            <th className="w-[65px] text-xl">Nationality</th>
-            <th className="w-[65px] text-xl">Team</th>
-          </tr>
-          <tr>
-            <td><Separator className="separator" /></td>
-            <td><Separator className="separator" /></td>
-            <td><Separator className="separator" /></td>
-            <td><Separator className="separator" /></td>
-            <td><Separator className="separator" /></td>
-            <td><Separator className="separator" /></td>
-          </tr>
-          </thead>
-          <tbody>
-            <div className='mt-2'></div>
-            {selectedPlayers.map(player => (
-              <PlayerTableRow key={player.id} player={player} correctPlayer={correctPlayer} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {playerSelected && <SelectedPlayersList selectedPlayers={selectedPlayers} correctPlayer={correctPlayer} />}
     </div>
   );
 };

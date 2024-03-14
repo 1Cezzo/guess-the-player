@@ -1,4 +1,4 @@
-name: Trigger Selected Players Creation
+name: Select correct player for the day
 
 on:
   push:
@@ -12,3 +12,4 @@ jobs:
     steps:
     - name: Send HTTP request
       run: curl -X POST ${{ secrets.BACKEND_URL }}
+      

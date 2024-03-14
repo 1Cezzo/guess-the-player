@@ -1,4 +1,4 @@
-name: Example Workflow
+name: Test Endpoint
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
       - main
 
 jobs:
-  example_job:
+  test_endpoint:
     runs-on: ubuntu-latest
 
-    env:
-      MY_ENV_VAR: ${{ secrets.BACKEND_URL }}
-
     steps:
-      - name: Print environment variable
-        run: echo $MY_ENV_VAR
+      - name: Check endpoint availability
+        run: |
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.BACKEND_URL }}/players/")
+          if [ $response_code -eq 200 ]; then
+            echo "Endpoint is accessible"
+          else
+            echo "Endpoint is not accessible, HTTP status code: $response_code"
+            exit 1
+          fi

@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
-
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   create_players:
@@ -13,5 +13,4 @@ jobs:
     
     steps:
     - name: Send HTTP request
-      run: curl -X POST https://luigi-backend-7f709e978d15.herokuapp.com/selected-players/create/
-      
+      run: curl -X POST ${{ secrets.BACKEND_URL }}

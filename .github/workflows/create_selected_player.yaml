@@ -1,0 +1,17 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+
+    env:
+      MY_ENV_VAR: ${{ secrets.BACKEND_URL }}
+
+    steps:
+      - name: Print environment variable
+        run: echo $MY_ENV_VAR

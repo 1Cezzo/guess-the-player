@@ -1,21 +1,14 @@
-name: Test Endpoint
+name: Trigger Selected Players Creation
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  test_endpoint:
+  create_players:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Check endpoint availability
-        run: |
-          response_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BACKEND_URL }})
-          if [ $response_code -eq 200 ]; then
-            echo "Endpoint is accessible"
-          else
-            echo "Endpoint is not accessible, HTTP status code: $response_code"
-            exit 1
-          fi
+    - name: Send HTTP request
+      run: curl -X POST ${{ secrets.BACKEND_URL }}

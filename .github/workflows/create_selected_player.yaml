@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check endpoint availability
         run: |
-          response_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.BACKEND_URL }}/players/")
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BACKEND_URL }})
           if [ $response_code -eq 200 ]; then
             echo "Endpoint is accessible"
           else

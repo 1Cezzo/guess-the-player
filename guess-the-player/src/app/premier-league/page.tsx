@@ -16,12 +16,13 @@ const PremierLeaguePage: React.FC = () => {
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  const endpointUrl = `${API_BASE_URL}/players/`;
+  const player_endpoint = `${API_BASE_URL}/players/`;
+  const correct_player_endpoint = `${API_BASE_URL}/selected-players/`;
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(endpointUrl);
+        const response = await axios.get(player_endpoint);
         setPlayers(response.data);
       } catch (error) {
         console.error('Error fetching players:', error);
@@ -60,10 +61,19 @@ const PremierLeaguePage: React.FC = () => {
     </div>
   ) : null;
 
-  const selectCorrectPlayer = () => {
-    const randomIndex = Math.floor(Math.random() * 33); // 438 is the total number of players
-    const randomPlayer = players[randomIndex];
-    setCorrectPlayer(randomPlayer);
+  const selectCorrectPlayer = async () => {
+    try {
+      const response = await axios.get(correct_player_endpoint);
+      const { player } = response.data;
+      const correctPlayer = players.find(p => p.id === player);
+      if (correctPlayer) {
+        setCorrectPlayer(correctPlayer);
+      } else {
+        console.error('Player not found in the list.');
+      }
+    } catch (error) {
+      console.error('Error selecting correct player:', error);
+    }
   };
   
   useEffect(() => {
@@ -71,12 +81,6 @@ const PremierLeaguePage: React.FC = () => {
       if (!correctPlayer) {
         selectCorrectPlayer();
       }
-  
-      const interval = setInterval(() => {
-        selectCorrectPlayer();
-      }, 24 * 60 * 60 * 1000);
-  
-      return () => clearInterval(interval);
     }
   }, [players]);
   

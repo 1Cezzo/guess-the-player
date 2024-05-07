@@ -1,16 +1,15 @@
-name: Select correct player for the day
-
-on:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: "0 0 * * *"
-
-jobs:
-  create_players:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Send HTTP request
-      run: curl -X POST ${{ secrets.BACKEND_URL }}
+# name: Select correct player for the day
+# on:
+#   push:
+#     branches:
+#       - master
+#   schedule:
+#     - cron: "0 0 * * *"
+#
+# jobs:
+#   create_players:
+#     runs-on: ubuntu-latest
+#     
+#     steps:
+#     - name: Send HTTP request
+#       run: curl -X POST ${{ secrets.BACKEND_URL }}
